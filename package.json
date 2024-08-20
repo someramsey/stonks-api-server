@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "start": "bun build ./src/index.ts --compile --outfile BUILDEDEXC && BUILDEDEXC",
+        "start": "bun src/index.ts",
         "dev": "bun --watch src/index.ts"
     },
     "devDependencies": {
