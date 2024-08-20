@@ -18,7 +18,11 @@ const stock = (definition: StockDefinition, initialPrice: number): Stock => {
     };
 };
 
-export const stocks: Stock[] = [
+export function setStocks(newStocks: Stock[]) {
+    stocks = newStocks;
+}
+
+export let stocks: Stock[] = [
     stock({
         name: "Coffee Inc.",
         abbreviation: "COFF",
