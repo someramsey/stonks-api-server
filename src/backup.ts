@@ -13,6 +13,8 @@ if(await backupFile.exists()) {
     }).catch((err) => {
         console.error("Error loading backup", err);
     });
+} else {
+    console.log("NO BACKUP FOUND");
 }
 
 export async function backupStocks() {
