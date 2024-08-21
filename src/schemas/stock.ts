@@ -10,7 +10,7 @@ export const stockSchema = z.object({
 export type Stock = z.infer<typeof stockSchema>;
 
 export const MAX_STOCK_HISTORY = 180;
-export const STOCK_UPDATE_INTERVAL = 5000;
+export const STOCK_UPDATE_INTERVAL = 10000;
 export const STOCK_BACKUP_INTERVAL = 20000;
 
 const generatePseudo = (current: number) => {
