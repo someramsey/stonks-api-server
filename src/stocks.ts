@@ -1,4 +1,5 @@
-import { computeNextPrice, type Stock } from "./schemas/stock";
+import type { Stock } from "./schemas/stock";
+import { computeNextPrice, simulateStock } from "./simulation";
 
 export const stocks: Stock[] = [];
 export let busyUpdating = false;
@@ -11,14 +12,7 @@ export function updateStocks() {
 
     busyUpdating = true;
 
-    stocks.forEach(stock => {
-        const volatility = stock.definition.volatility;
-        const interest = stock.definition.interest;
-        const basePrice = stock.definition.basePrice;
-
-        stock.instance.headPrice = computeNextPrice(stock.instance.headPrice, basePrice, volatility, interest);
-        stock.instance.tailPrice = computeNextPrice(stock.instance.tailPrice, basePrice, volatility, interest);
-    });
+    stocks.forEach(simulateStock);
 
     busyUpdating = false;
 }

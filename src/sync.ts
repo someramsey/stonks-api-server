@@ -1,5 +1,5 @@
 import Airtable, { Record, type FieldSet } from "airtable";
-import { computeNextPrice, STOCK_HISTORY_LENGTH } from "./schemas/stock";
+import { computeNextPrice, STOCK_HISTORY_LENGTH } from "./simulation";
 import { stocks } from "./stocks";
 
 if (!process.env.DB_API_KEY) {
@@ -9,6 +9,9 @@ if (!process.env.DB_API_KEY) {
 if (!process.env.DB_BASE_ID) {
     throw new Error("Missing DB_BASE_ID");
 }
+
+export const BACKUP_INTERVAL = 5 * 60 * 1000;
+
 
 const base = new Airtable({ apiKey: process.env.DB_API_KEY }).base(process.env.DB_BASE_ID);
 const table = base("Stocks");

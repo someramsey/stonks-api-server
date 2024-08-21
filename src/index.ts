@@ -1,15 +1,15 @@
 import { serve } from "bun";
+import { BACKUP_INTERVAL, loadStockList, saveStockList } from "./sync";
 import router from "./router";
-import { STOCK_BACKUP_INTERVAL, STOCK_UPDATE_INTERVAL } from "./schemas/stock";
+import { SIMULATION_INTERVAL } from "./simulation";
 import { updateStocks } from "./stocks";
-import { loadStockList, saveStockList } from "./database";
 
 const server = serve({ fetch: router.fetch });
 console.log(`Server running at http://localhost:${server.port}`);
 
 
 await loadStockList();
-setInterval(updateStocks, STOCK_UPDATE_INTERVAL);
-setInterval(saveStockList, STOCK_BACKUP_INTERVAL);
+setInterval(updateStocks, SIMULATION_INTERVAL);
+setInterval(saveStockList, BACKUP_INTERVAL);
 
 console.log("Stocks update interval started");
