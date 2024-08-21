@@ -8,8 +8,7 @@ export default createGetRoute("/list", z.array(stockStateSchema), context => {
         name: stock.definition.name,
         abbreviation: stock.definition.abbreviation,
         description: stock.definition.description,
-        value: stock.instance.price,
-        growth: stock.instance.growth
+        price: stock.instance.headPrice
     })));
 });
 

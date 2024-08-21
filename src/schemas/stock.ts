@@ -3,15 +3,16 @@ import { stockDefinitionSchema } from "./definition";
 import { stockInstanceSchema, type StockInstance } from "./instance";
 
 export const stockSchema = z.object({
+    id: z.string(),
     definition: stockDefinitionSchema,
     instance: stockInstanceSchema,
 });
 
 export type Stock = z.infer<typeof stockSchema>;
 
-export const MAX_STOCK_HISTORY = 180;
-export const STOCK_UPDATE_INTERVAL = 10000;
-export const STOCK_BACKUP_INTERVAL = 20000;
+export const STOCK_HISTORY_LENGTH = 180;
+export const STOCK_UPDATE_INTERVAL = 10 * 1000;
+export const STOCK_BACKUP_INTERVAL = 5 * 60 * 1000;
 
 const generatePseudo = (current: number) => {
     const seed = current * 1000;
@@ -23,32 +24,13 @@ const lerp = (start: number, end: number, factor: number) => {
     return start + (end - start) * factor;
 }
 
-export function update(instance: StockInstance, volatility: number, interest: number) {
-    if (instance.history.values.length >= MAX_STOCK_HISTORY) {
-        instance.history.ticks.shift();
-        instance.history.values.shift();
-    }
+export function computeNextPrice(value: number, initialValue: number, volatility: number, interest: number) {
+    const step = generatePseudo(value);
 
-    const rnd = generatePseudo(instance.price);
+    const magnitude = (2 * step - 1) * volatility;
 
-    const size = 2 * volatility;
-    let magnitude = size * rnd;
+    const priceDelta = value * magnitude;
+    const updatedPrice = Math.max(0, value + priceDelta);
 
-    if (magnitude > volatility) {
-        magnitude -= size;
-    }
-
-    const changeAmount = instance.price * magnitude;
-    let newPrice = Math.max(0, instance.price + changeAmount);
-
-    newPrice = lerp(newPrice, instance.initialPrice, 0.001 * instance.initialPrice * interest);
-
-    instance.growth = (newPrice - instance.price) / instance.price;
-    instance.lowest = Math.min(instance.lowest, newPrice);
-    instance.highest = Math.max(instance.highest, newPrice);
-
-    instance.history.ticks.push(Date.now());
-    instance.history.values.push(newPrice);
-
-    instance.price = newPrice;
+    return lerp(updatedPrice, initialValue, 0.001 * initialValue * interest);
 }
