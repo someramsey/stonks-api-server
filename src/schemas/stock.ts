@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { stockDefinitionSchema } from "./definition";
-import { stockInstanceSchema, type StockInstance } from "./instance";
+import { stockInstanceSchema } from "./instance";
 
 export const stockSchema = z.object({
     id: z.string(),

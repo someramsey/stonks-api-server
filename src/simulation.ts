@@ -1,4 +1,3 @@
-import type { StockDefinition } from "./schemas/definition";
 import type { Stock } from "./schemas/stock";
 
 export const STOCK_HISTORY_LENGTH = 180;

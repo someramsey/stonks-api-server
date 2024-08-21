@@ -1,5 +1,5 @@
 import type { Stock } from "./schemas/stock";
-import { computeNextPrice, simulateStock } from "./simulation";
+import { simulateStock } from "./simulation";
 
 export const stocks: Stock[] = [];
 export let busyUpdating = false;
