@@ -5,6 +5,7 @@ export const stockStateSchema = z.object({
     name: z.string(),
     abbreviation: z.string(),
     description: z.string(),
+    fees: z.number(),
     price: z.number()
 });
 
