@@ -34,13 +34,6 @@ export function saveStockList() {
         table.update(chunk.map(stock => ({
             id: stock.id,
             fields: {
-                name: stock.definition.name,
-                abbreviation: stock.definition.abbreviation,
-                description: stock.definition.description,
-                fees: stock.definition.fees,
-                interest: stock.definition.interest,
-                volatility: stock.definition.volatility,
-                base: stock.definition.basePrice,
                 tail: stock.instance.tailPrice,
                 head: stock.instance.headPrice
             }
