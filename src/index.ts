@@ -4,11 +4,12 @@ import router from "./router";
 import { SIMULATION_INTERVAL } from "./simulation";
 import { updateStocks } from "./stocks";
 
+await loadStockList();
+
 const server = serve({ fetch: router.fetch });
 console.log(`Server running at http://localhost:${server.port}`);
 
 
-await loadStockList();
 setInterval(updateStocks, SIMULATION_INTERVAL);
 setInterval(saveStockList, BACKUP_INTERVAL);
 
