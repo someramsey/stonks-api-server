@@ -1,14 +1,22 @@
-import { z } from 'zod';
-import { createPostRoute } from "../routes";
-import { stockSchema } from '../schemas/stock';
+import { Express } from 'express';
 import { stocks } from '../stocks';
 
-export default createPostRoute("/find", z.string(), stockSchema, (context, stockId) => {
-    for (const stock of stocks) {
-        if (stock.id === stockId) {
-            return context.json(stock, 200);
-        }
-    }
+export default (app: Express) => {
+    app.post("/find", (req, res) => {
+        const stockId = req.body.stockId;
 
-    return context.text("Not found, invalid stock id", 400);
-})
+        if (typeof stockId !== 'string') {
+            res.status(400).send('Invalid stock id');
+            return;
+        }
+
+        for (const stock of stocks) {
+            if (stock.id === stockId) {
+                res.send(stock);
+                return;
+            }
+        }
+
+        res.status(404).send('Stock not found');
+    });
+}

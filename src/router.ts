@@ -1,19 +1,15 @@
-import { Hono } from "hono";
-import { cors } from 'hono/cors';
-import { logger } from 'hono/logger';
+import express from 'express';
+import cors from 'cors';
 
 import buildFindStockRoute from './routes/find';
 import buildStockListRoute from "./routes/list";
 
-const app = new Hono();
+const app = express();
 
 app.use(cors());
-app.use(logger());
+app.use(express.json())
 
-export const routes = {
-    findStock: buildFindStockRoute(app),
-    stockList: buildStockListRoute(app)
-} as const;
+buildFindStockRoute(app);
+buildStockListRoute(app);
 
 export default app;
-

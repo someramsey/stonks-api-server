@@ -5,6 +5,7 @@
         "target": "ES6",
         "module": "CommonJS",
         "moduleDetection": "force",
+        "sourceMap": true,
         "jsx": "react-jsx",
         "allowJs": true,
         "esModuleInterop": true,
