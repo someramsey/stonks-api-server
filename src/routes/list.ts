@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createGetRoute } from "../router";
+import { createGetRoute } from "../routes";
 import { stocks } from '../stocks';
 import { stockStateSchema } from '../schemas/state';
 

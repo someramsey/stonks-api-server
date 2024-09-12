@@ -1,6 +1,7 @@
 import Airtable, { Record, type FieldSet } from "airtable";
 import { computeNextPrice, STOCK_HISTORY_LENGTH } from "./simulation";
 import { stocks } from "./stocks";
+import { Stock } from "./schemas/stock";
 
 if (!process.env.DB_API_KEY) {
     throw new Error("Missing DB_API_KEY");
@@ -20,11 +21,13 @@ function readKey<T>(record: Record<FieldSet>, key: string): T {
     return record.get(key) as T;
 }
 
+type StockChunk = Stock[];
+
 export function saveStockList() {
     console.log("Started saving stock list");
 
     const chunkSize = 10;
-    const chunks = [];
+    const chunks: StockChunk[] = [];
 
     for (let i = 0; i < stocks.length; i += chunkSize) {
         chunks.push(stocks.slice(i, i + chunkSize));

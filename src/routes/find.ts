@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createPostRoute } from "../router";
+import { createPostRoute } from "../routes";
 import { stockSchema } from '../schemas/stock';
 import { stocks } from '../stocks';
 
